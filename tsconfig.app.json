@@ -28,6 +28,12 @@
     "paths": {
       "@layouts/*": [
         "layouts/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@components/*": [
+        "components/*"
       ]
     },
   },
