@@ -12,6 +12,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@layouts': resolve(__dirname, './src/layouts'),
+      '@services': resolve(__dirname, './src/services'),
       '@components': resolve(__dirname, './src/components')
     }
   }
