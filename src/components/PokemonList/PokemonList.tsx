@@ -1,21 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import { getPokemons } from '@services/pokemonService';
+import usePokemons from './usePokemons';
 import defaultClass from './pokemonList.module.css';
 
 export default function PokemonList() {
-  const query = useQuery({
-    queryKey: ['pokemons'],
-    queryFn: getPokemons
-  });
+  const { isLoading, pokemons } = usePokemons();
 
-
-  if (query.isLoading) {
+  if (isLoading) {
     return <div>Chargement...</div>;
   }
 
   return (
     <div className={defaultClass.container}>
-      {query.data!.results.map((pokemon, index) => {
+      {pokemons.map((pokemon: { name: string }, index: number) => {
         const id = index + 1;
         return (
           <div
