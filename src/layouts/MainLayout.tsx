@@ -1,5 +1,5 @@
 import { Outlet } from "react-router"
-import defaultClass from "./MainLayout.module.css";
+import defaultClass from "./mainLayout.module.css";
 
 function MainLayout() {
   return (

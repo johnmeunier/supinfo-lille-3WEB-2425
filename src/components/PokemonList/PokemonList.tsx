@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPokemons } from '@services/pokemonService';
+import defaultClass from './pokemonList.module.css';
 
 export default function PokemonList() {
   const query = useQuery({
@@ -13,19 +14,19 @@ export default function PokemonList() {
   }
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+    <div className={defaultClass.container}>
       {query.data!.results.map((pokemon, index) => {
         const id = index + 1;
         return (
           <div
             key={pokemon.name}
-            style={{ border: '1px solid #ccc', padding: '10px' }}
+            className={defaultClass.card}
           >
             <h3>{pokemon.name}</h3>
             <img
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
               alt={pokemon.name}
-              style={{ width: '100px' }}
+              className={defaultClass.image}
             />
           </div>
         );
