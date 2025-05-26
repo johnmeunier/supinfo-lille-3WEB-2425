@@ -35,6 +35,7 @@ const usePokemons = () => {
       value = data!.count;
     }
     const url = new URL(urlToFetch);
+    url.searchParams.delete("limit");
     url.searchParams.append("limit", value.toString());
     setUrlToFetch(url.href);
   }
