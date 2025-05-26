@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import usePokemons from './usePokemons';
 import defaultClass from './pokemonList.module.css';
+import { useDebounce } from 'use-debounce';
+
 
 export default function PokemonList() {
   const [limit, setLimit] = useState(20);
   const { isLoading, pokemons, previous, goTo, next, changeLimit, search } = usePokemons();
+  const [filter, setFilter] = useState('');
+  const [debouncedFilter] = useDebounce(filter, 1000);
+
+  useEffect(() => {
+    search(debouncedFilter);
+  }, [debouncedFilter]);
 
   if (isLoading) {
     return <div>Chargement...</div>;
@@ -23,7 +31,7 @@ export default function PokemonList() {
         <option value="0">all</option>
       </select>
       {
-        limit == 0 && (<input type="search" name="search" id="search" onChange={(e) => search(e.target.value)} />)
+        limit == 0 && (<input type="search" name="search" id="search" value={filter} onChange={(e) => setFilter(e.target.value)} />)
       }
 
       {
