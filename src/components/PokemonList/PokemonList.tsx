@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import usePokemons from './usePokemons';
+import usePokemons, { type PokemonWithDetails } from './usePokemons';
 import defaultClass from './pokemonList.module.css';
 import { useDebounce } from 'use-debounce';
-
+import { useNavigate } from 'react-router';
 
 export default function PokemonList() {
   const [limit, setLimit] = useState(20);
   const { isLoading, pokemons, previous, goTo, next, changeLimit, search } = usePokemons();
   const [filter, setFilter] = useState('');
   const [debouncedFilter] = useDebounce(filter, 1000);
+  const navigate = useNavigate()
 
   useEffect(() => {
     search(debouncedFilter);
@@ -35,14 +36,21 @@ export default function PokemonList() {
       }
 
       {
-        pokemons?.map((pokemon: { name: string }) => {
+        pokemons?.map((pokemon: PokemonWithDetails) => {
           return (
-            <div
+            <button
+              onClick={() => { navigate(`/pokemon/${pokemon.id}`) }}
               key={pokemon.name}
               className={defaultClass.card}
             >
               <h3>{pokemon.name}</h3>
-            </div>
+              {
+                pokemon.image && <img src={pokemon.image} alt={pokemon.name} />
+              }
+
+              <p>{pokemon.id}</p>
+              <p>{pokemon.types.join(', ')}</p>
+            </button>
           );
         })
       }
