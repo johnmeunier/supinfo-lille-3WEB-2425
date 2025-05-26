@@ -18,6 +18,7 @@ const baseUrl = "https://pokeapi.co/api/v2/";
 
 const usePokemons = () => {
   const [urlToFetch, setUrlToFetch] = useState(`${baseUrl}pokemon`);
+  const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[] | undefined>(undefined);
 
   const { data, isLoading, isError } = useQuery<PokemonResponse>({
     queryKey: ['pokemons', urlToFetch],
@@ -40,6 +41,10 @@ const usePokemons = () => {
     setUrlToFetch(url.href);
   }
 
+  const search = (keyword: string) => {
+    setFilteredPokemons(data?.results.filter((pokemon: Pokemon) => pokemon.name.toLowerCase().includes(keyword.toLowerCase())))
+  }
+
   const goTo = (url: string) => {
     setUrlToFetch(url);
   };
@@ -47,11 +52,12 @@ const usePokemons = () => {
   return {
     isLoading,
     isError,
-    pokemons: data?.results || null,
+    pokemons: filteredPokemons || data?.results || null,
     previous: data?.previous || null,
     next: data?.next || null,
     goTo,
-    changeLimit
+    changeLimit,
+    search
   };
 }
 

@@ -4,7 +4,7 @@ import defaultClass from './pokemonList.module.css';
 
 export default function PokemonList() {
   const [limit, setLimit] = useState(20);
-  const { isLoading, pokemons, previous, goTo, next, changeLimit } = usePokemons();
+  const { isLoading, pokemons, previous, goTo, next, changeLimit, search } = usePokemons();
 
   if (isLoading) {
     return <div>Chargement...</div>;
@@ -22,6 +22,10 @@ export default function PokemonList() {
         <option value="50">50</option>
         <option value="0">all</option>
       </select>
+      {
+        limit == 0 && (<input type="search" name="search" id="search" onChange={(e) => search(e.target.value)} />)
+      }
+
       {
         pokemons?.map((pokemon: { name: string }) => {
           return (
