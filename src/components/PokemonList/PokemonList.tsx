@@ -8,7 +8,7 @@ export default function PokemonList() {
   const [limit, setLimit] = useState(20);
   const { isLoading, pokemons, previous, goTo, next, changeLimit, search } = usePokemons();
   const [filter, setFilter] = useState('');
-  const [debouncedFilter] = useDebounce(filter, 1000);
+  const [debouncedFilter] = useDebounce(filter, 500);
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -42,6 +42,7 @@ export default function PokemonList() {
               onClick={() => { navigate(`/pokemon/${pokemon.id}`) }}
               key={pokemon.name}
               className={defaultClass.card}
+              aria-label={pokemon.name}
             >
               <h3>{pokemon.name}</h3>
               {
