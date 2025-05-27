@@ -1,4 +1,4 @@
-import { Outlet } from "react-router"
+import { Outlet, Link } from "react-router"
 import defaultClass from "./mainLayout.module.css";
 
 function MainLayout() {
@@ -7,16 +7,16 @@ function MainLayout() {
       <header className={defaultClass.header}>
         <h1 className={defaultClass.title}>Pokedex</h1>
       </header>
-        <nav className={defaultClass.nav}>
-            <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/add">Add Pokemon</a>
-            </li>
-            </ul>
-        </nav>
+      <nav className={defaultClass.nav}>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/add">Add Pokemon</Link>
+          </li>
+        </ul>
+      </nav>
       <main className={defaultClass.container}>
         <Outlet></Outlet>
       </main>
