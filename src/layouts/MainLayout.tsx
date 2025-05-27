@@ -7,6 +7,16 @@ function MainLayout() {
       <header className={defaultClass.header}>
         <h1 className={defaultClass.title}>Pokedex</h1>
       </header>
+        <nav className={defaultClass.nav}>
+            <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/add">Add Pokemon</a>
+            </li>
+            </ul>
+        </nav>
       <main className={defaultClass.container}>
         <Outlet></Outlet>
       </main>
