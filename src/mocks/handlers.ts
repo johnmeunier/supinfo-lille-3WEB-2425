@@ -15,14 +15,21 @@ export const handlers = [
 
   http.get("https://pokeapi.co/api/v2/pokemon", async ({ request }) => {
     await delay()
-    console.log(request);
-    // offset & limit à gérer
-    // getPokemon200.previous
-    // getPokemon200.next
-    // getPokemon200.count
-    // getPokemon200.results
-    getPokemon200.results.splice(0, 10)
-    return HttpResponse.json(getPokemon200)
+    const copyPokemon200 = JSON.parse(JSON.stringify(getPokemon200));
+    const url = new URL(request.url);
+    const offset = parseInt(url.searchParams.get("offset") || "0");
+    const limit = parseInt(url.searchParams.get("limit") || "20");
+    copyPokemon200.count = copyPokemon200.results.length;
+    if (offset > 0) {
+      copyPokemon200.previous = `https://pokeapi.co/api/v2/pokemon?offset=${Math.max(0, offset - limit)}&limit=${limit}`;
+    }
+    if (offset + limit < getPokemon200.count) {
+      copyPokemon200.next = `https://pokeapi.co/api/v2/pokemon?offset=${offset + limit}&limit=${limit}`;
+    } else {
+      copyPokemon200.next = null;
+    }
+    copyPokemon200.results = getPokemon200.results.splice(offset, limit)
+    return HttpResponse.json(copyPokemon200)
   }),
 
   http.get("https://pokeapi.co/api/v2/pokemon/:id/", async ({ }) => {
