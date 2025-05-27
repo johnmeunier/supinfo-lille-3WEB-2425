@@ -9,8 +9,30 @@ export const AddPokemonPage = () => {
             const formElement = form.elements as typeof form.elements & {
 
                 name: {value: string}
+                types: {value: string}
+                image: {value: string}
 
             }
+            const baseUrl = "https://pokeapi.co/api/v2/";
+            fetch(baseUrl + "pokemon", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: formElement.name.value,
+                    image: formElement.image.value,
+                    types: formElement.types.value.split(",").map((type: string) => {
+                        return {
+                            type: {
+                                name: type
+                            }
+                        }
+                    })
+
+                })
+            })
+
             console.log(formElement.name.value);
         }}>
             <label>
@@ -19,8 +41,8 @@ export const AddPokemonPage = () => {
             </label>
             <br/>
             <label>
-                Type:
-                <input type="text" name="type"/>
+                Types:
+                <input type="text" name="types"/>
             </label>
             <br/>
             <label>
